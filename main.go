@@ -67,11 +67,17 @@ func Connection(conn net.Conn, dataBas *DataBases) {
 			conn.Write([]byte(fmt.Sprintf("%t", res)))
 		case "HPUSH":
 			//key := strokaVvoda[1]
+			if len(strokaVvoda)==3{
+								
 			value := strokaVvoda[2]
 			
 			//dataBas.HashMap.Insert(key, value)
 			key:=strings.TrimSpace(strokaVvoda[1])
 			dataBas.HashMap.Insert(key,value)
+
+			}else{
+				conn.Write([]byte("Command len < 3 "))
+			}
 		case "HGET": 
 			key:=strings.TrimSpace(strokaVvoda[1])
 			res,err:= dataBas.HashMap.HGet(key)
